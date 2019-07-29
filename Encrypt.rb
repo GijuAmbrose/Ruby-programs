@@ -16,17 +16,22 @@ class Encrypt
     end
     puts "#{arr2}"
     add_numbers(arr,arr2)
-    substract_numbers(arr2)
+    data3 = substract_numbers(arr2)
+    to_alpha(data3)
+    if @resultant2 == input
+      p "#{input}"
+    end
   end
 
   def substract_numbers(data)
+    data2 = []
     data.each_with_index do |item, index|
-      if item < @resultant2[index] || item == @resultant2[index]
-        item =+26
+      if @decrypt[index] < item || @decrypt[index] == item
+        @decrypt[index] +=26
       end
-      data2 << item - @resultant2[index]
+      data2 << @decrypt[index] - item
     end
-    puts ("Result2: #{data2}")
+    data2
   end
 
   def add_numbers(arr,arr2)
@@ -50,13 +55,17 @@ class Encrypt
   # to_alpha(3) => 'C' 
   def to_alpha(numeric)
     @resultant2 = []
+    @decrypt = []
     numeric.each do |ele|
     ele -= 26 if ele > 26
     @resultant2 << @alphabets[ele - 1]
     end
     @resultant2 = @resultant2.join
-    @resultant2 = @resultant2.chars.each_slice(5).map(&:join)
-    puts "Result: #{@resultant2}"
+    @resultant2 = @resultant2.chars
+    @resultant2.each do |ele|
+      @decrypt << to_numeric(ele)
+    end
+    puts "#{@decrypt}"
   end
 
   # to_numeric('A') => 1
