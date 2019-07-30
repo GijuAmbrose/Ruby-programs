@@ -17,7 +17,7 @@ class Encrypt
     data3 = substract_numbers(arr2)
     to_alpha(data3)
     if input.chars == @resultant2
-      puts "Decrypted: #{check_input}"
+      puts "Decrypted: #{check_input.downcase}"
     else
       p "Decryption is not success!!!!!!"
     end
@@ -26,10 +26,12 @@ class Encrypt
   def substract_numbers(data)
     data2 = []
     data.each_with_index do |item, index|
-      if @decrypt[index] < item || @decrypt[index] == item
-        @decrypt[index] +=26
+      if @decrypt[index] != nil
+        if @decrypt[index] < item || @decrypt[index] == item
+          @decrypt[index] +=26
+        end
+        data2 << @decrypt[index] - item
       end
-      data2 << @decrypt[index] - item
     end
     data2
   end
@@ -75,8 +77,8 @@ class Encrypt
   end
 end
 
-#puts  "Enter the string to be encrypted:"
-input = "code in ruby live longer".upcase
+puts  "Enter the string to be encrypted:"
+input = gets.chomp.upcase
 check_input = input
 input = input.delete(' ')
 cipher = Encrypt.new(input,check_input)
