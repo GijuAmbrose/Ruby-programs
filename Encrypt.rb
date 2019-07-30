@@ -2,7 +2,7 @@
 class Encrypt
   attr_reader :alphabets
 
-  def initialize(input)
+  def initialize(input,check_input)
     @key = "DWJXH YRFDG TMSHP UURXJ".delete(' ')
     @alphabets = alphabets
     arr = [] 
@@ -10,16 +10,16 @@ class Encrypt
       input.chars.each do|ele|
       arr << to_numeric(ele)
     end
-    puts "#{arr}"
     @key.chars.each do |ele|
       arr2 << to_numeric(ele)
     end
-    puts "#{arr2}"
     add_numbers(arr,arr2)
     data3 = substract_numbers(arr2)
     to_alpha(data3)
-    if @resultant2 == input
-      p "#{input}"
+    if input.chars == @resultant2
+      puts "Decrypted: #{check_input}"
+    else
+      p "Decryption is not success!!!!!!"
     end
   end
 
@@ -42,7 +42,8 @@ class Encrypt
         resultant[index] = resultant[index] - 26
       end
     end
-    to_alpha(resultant)
+    result = to_alpha(resultant)
+    puts "Encrypted: #{result.join}"
   end
 
 
@@ -65,7 +66,6 @@ class Encrypt
     @resultant2.each do |ele|
       @decrypt << to_numeric(ele)
     end
-    puts "#{@decrypt}"
   end
 
   # to_numeric('A') => 1
@@ -77,6 +77,7 @@ end
 
 #puts  "Enter the string to be encrypted:"
 input = "code in ruby live longer".upcase
+check_input = input
 input = input.delete(' ')
-cipher = Encrypt.new(input)
+cipher = Encrypt.new(input,check_input)
 puts cipher.inspect
